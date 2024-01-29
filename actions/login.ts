@@ -6,7 +6,7 @@ import { AuthError } from "next-auth";
 
 import { signIn } from "@/auth";
 import { loginSchema } from "@/schemas";
-import { getUserByEmail } from "@/lib/auth/get-user-by-id";
+import { getUserByEmail } from "@/lib/auth/get-user-by-email";
 
 type Login =
 	| {
