@@ -16,7 +16,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { getPlaces } from "@/lib/data/get-places";
+import { getPlaces } from "@/lib/data/get-data";
 import { Event, eventSchema } from "@/schemas";
 import {
 	Form,
