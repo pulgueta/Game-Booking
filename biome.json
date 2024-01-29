@@ -15,6 +15,9 @@
 			},
 			"performance": {
 				"noDelete": "error"
+			},
+			"suspicious": {
+				"noExplicitAny": "off"
 			}
 		}
 	},
