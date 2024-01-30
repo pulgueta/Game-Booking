@@ -3,7 +3,7 @@ import Credentials from "next-auth/providers/credentials";
 import { compare } from "bcrypt";
 
 import { loginSchema } from "./schemas";
-import { User } from "./models/user.entity";
+import { UserEntity } from "./models/user.entity";
 
 export default {
 	providers: [
@@ -14,7 +14,7 @@ export default {
 				if (validatedFields.success) {
 					const { email, password } = validatedFields.data;
 
-					const user = await User.findOneBy({
+					const user = await UserEntity.findOneBy({
 						email,
 					});
 
