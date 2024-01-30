@@ -26,3 +26,21 @@ export const rscFetch = async <T extends (...args: any) => any | any[]>(
 
 	return (await response.json()) as RSCFetch<T>;
 };
+
+export const ratings = [
+	{
+		label: "Muy mala",
+	},
+	{
+		label: "Mala",
+	},
+	{
+		label: "Regular",
+	},
+	{
+		label: "Buena",
+	},
+	{
+		label: "Muy buena",
+	},
+] as const;
