@@ -14,7 +14,7 @@ import {
 const Register = () => {
 	return (
 		<section className='p-4 flex items-center justify-center'>
-			<Card className='w-full md:max-w-md'>
+			<Card className='w-full md:w-96'>
 				<CardHeader>
 					<CardTitle>Registro</CardTitle>
 					<CardDescription>

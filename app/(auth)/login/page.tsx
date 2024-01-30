@@ -14,7 +14,7 @@ import { LoginForm } from "@/components/form/login-form";
 const Login = () => {
 	return (
 		<section className='p-4 flex items-center justify-center'>
-			<Card className='w-full md:max-w-md'>
+			<Card className='w-full md:w-96'>
 				<CardHeader>
 					<CardTitle>Iniciar sesión</CardTitle>
 					<CardDescription>
