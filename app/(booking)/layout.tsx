@@ -28,8 +28,8 @@ const RootLayout: NextPage<MainPage> = async ({
 	return (
 		<section className='grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 container'>
 			{children}
-			{availability}
 			{userbooks}
+			{availability}
 			{booking}
 			{bookings}
 		</section>
