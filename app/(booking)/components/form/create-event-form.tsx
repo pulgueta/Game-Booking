@@ -81,39 +81,33 @@ export const CreateEventForm: FC<EventPlaces> = ({ places, email }) => {
 				<FormField
 					control={form.control}
 					name='place'
-					render={() => (
-						<FormField
-							control={form.control}
-							name='place'
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>Lugar del evento</FormLabel>
-									<Select
-										onValueChange={field.onChange}
-										defaultValue={field.value}
-										disabled={form.formState.isSubmitting}
-									>
-										<FormControl>
-											<SelectTrigger>
-												<SelectValue placeholder='¿Dónde quieres realizar tu evento?' />
-											</SelectTrigger>
-										</FormControl>
-										<SelectContent>
-											{places.map((place) => (
-												<SelectItem
-													key={place.id}
-													value={place.name}
-												>
-													{place.name}
-												</SelectItem>
-											))}
-										</SelectContent>
-									</Select>
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>Lugar del evento</FormLabel>
+							<Select
+								onValueChange={field.onChange}
+								defaultValue={field.value}
+								disabled={form.formState.isSubmitting}
+							>
+								<FormControl>
+									<SelectTrigger>
+										<SelectValue placeholder='¿Dónde quieres realizar tu evento?' />
+									</SelectTrigger>
+								</FormControl>
+								<SelectContent>
+									{places.map((place) => (
+										<SelectItem
+											key={place.id}
+											value={place.name}
+										>
+											{place.name}
+										</SelectItem>
+									))}
+								</SelectContent>
+							</Select>
 
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
+							<FormMessage />
+						</FormItem>
 					)}
 				/>
 
@@ -156,7 +150,7 @@ export const CreateEventForm: FC<EventPlaces> = ({ places, email }) => {
 										mode='single'
 										selected={field.value}
 										onSelect={field.onChange}
-										// disabled={(date) => date < new Date()}
+										disabled={(date) => date < new Date()}
 										initialFocus
 									/>
 								</PopoverContent>
