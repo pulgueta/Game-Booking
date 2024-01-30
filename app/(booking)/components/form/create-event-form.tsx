@@ -2,6 +2,8 @@
 
 import { FC } from "react";
 
+import { useRouter } from "next/navigation";
+
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
@@ -34,13 +36,14 @@ import {
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
-import { useRouter } from "next/navigation";
+import { Textarea } from "@/components/ui/textarea";
 
 type EventPlaces = {
 	places: Awaited<ReturnType<typeof getPlaces>>;
+	email: string;
 };
 
-export const CreateEventForm: FC<EventPlaces> = ({ places }) => {
+export const CreateEventForm: FC<EventPlaces> = ({ places, email }) => {
 	const { refresh } = useRouter();
 
 	const form = useForm<Event>({
@@ -49,21 +52,21 @@ export const CreateEventForm: FC<EventPlaces> = ({ places }) => {
 			eventDate: undefined,
 			participants: 0,
 			place: "",
+			description: "",
 		},
 	});
 
 	const onSubmit = form.handleSubmit(async (data) => {
 		const res = await fetch("/api/events", {
 			method: "POST",
-			body: JSON.stringify(data),
+			body: JSON.stringify({ ...data, email }),
 		});
 
+		const jsonRes = await res.json();
+
 		if (!res.ok) {
-			switch (res.status) {
-				case 400:
-					toast.error(res.text());
-					return;
-			}
+			toast.error(jsonRes);
+			return;
 		}
 
 		refresh();
@@ -153,7 +156,7 @@ export const CreateEventForm: FC<EventPlaces> = ({ places }) => {
 										mode='single'
 										selected={field.value}
 										onSelect={field.onChange}
-										disabled={(date) => date < new Date()}
+										// disabled={(date) => date < new Date()}
 										initialFocus
 									/>
 								</PopoverContent>
@@ -171,6 +174,22 @@ export const CreateEventForm: FC<EventPlaces> = ({ places }) => {
 							<FormLabel>Número de participantes</FormLabel>
 							<Input
 								type='number'
+								disabled={form.formState.isSubmitting}
+								{...field}
+							/>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+
+				<FormField
+					control={form.control}
+					name='description'
+					render={({ field }) => (
+						<FormItem className='flex flex-col'>
+							<FormLabel>Descripción del evento</FormLabel>
+							<Textarea
+								placeholder='¿Qué ocurrirá en el evento?'
 								disabled={form.formState.isSubmitting}
 								{...field}
 							/>
