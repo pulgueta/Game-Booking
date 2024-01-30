@@ -2,9 +2,10 @@
 
 import { hash } from "bcrypt";
 
-import { User } from "@/models/user.entity";
+import { UserEntity } from "@/models/user.entity";
 import { registerSchema } from "@/schemas";
 import { AppDataSource } from "@/models/db";
+import { getUserByEmail } from "@/lib/auth/get-user-by-email";
 
 type Register =
 	| {
@@ -27,13 +28,11 @@ export const register = async (_prev: Register, formData: FormData) => {
 
 	const { email, name, password } = values.data;
 
-	const userRepository = (await AppDataSource).getRepository(User);
+	const userRepository = (await AppDataSource).getRepository(UserEntity);
 
-	const userExists = await userRepository.findBy({
-		email,
-	});
+	const userExists = await getUserByEmail(email);
 
-	if (userExists.length >= 1) {
+	if (userExists) {
 		return {
 			success: false,
 			message: "El correo ya está en uso, intenta con uno nuevo",
@@ -42,7 +41,7 @@ export const register = async (_prev: Register, formData: FormData) => {
 
 	const hashedPassword = await hash(password, 12);
 
-	const user = new User();
+	const user = new UserEntity();
 	user.name = name;
 	user.password = hashedPassword;
 	user.email = email;
