@@ -13,17 +13,15 @@ export const revalidate = 0;
 export const dynamic = "force-dynamic";
 
 const Availability = async () => {
-	const places = await rscFetch<Awaited<ReturnType<typeof getPlaces>>>(
-		"/api/places"
-	);
+	const places = await rscFetch<typeof getPlaces>("/api/places");
 
 	return (
-		<div className='border p-4 rounded w-full bg-secondary/50'>
-			<h3 className='text-2xl font-semibold tracking-tight'>
+		<div className='border p-4 rounded w-full bg-secondary/50 md:col-span-2 lg:col-span-1'>
+			<h3 className='text-2xl font-semibold tracking-tight mb-4'>
 				Disponibilidad de lugares
 			</h3>
 
-			<Table>
+			<Table className='border rounded'>
 				<TableHeader>
 					<TableRow>
 						<TableHead className='w-full'>Lugar</TableHead>
