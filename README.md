@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Reserva de eventos
 
-## Getting Started
+Esta aplicación es un monolito hecho con Next.js en su última versión a día de redacción de este README (30 de enero de 2024).
 
-First, run the development server:
+Aquí se podrán agendar eventos en ciertos centros comerciales de Colombia, proporcionando una descripción del mismo y la cantidad de participantes que habrán en él además de la fecha en la que se realizará.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Utilizar en local
+
+> [!IMPORTANT]
+> Se requieren cuentas en [Neon](https://neon.tech/) y [Pusher](https://pusher.com/)
+
+### Pasos:
+
+1. Instalar [Node.js](https://nodejs.org/) v18 o superior.
+
+2. Clonar el repositorio de la siguiente manera:
+
+```sh
+git clone https://github.com/pulgueta/Game-Booking <carpeta>
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. Entrar al directorio e instalar las dependencias con npm, yarn o pnpm:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```sh
+cd <carpeta>
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+pnpm install
 
-## Learn More
+# O también
 
-To learn more about Next.js, take a look at the following resources:
+pnpm i
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+4. Luego de registrarse en los servicios mencionados al inicio, pegar las variables de entorno en el archivo [.env.local](./.env.local) como se muestra en el [.env.example](./.env.example)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+5. Correr de forma local la aplicación:
 
-## Deploy on Vercel
+```sh
+pnpm run dev
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# O también
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+pnpm dev
+```
+
+> [!WARNING]
+> Si no se proporcionan las variables de entorno correctas, la aplicación fallará al correr.
+
+¡Listo! Ya puedes usar la aplicación en local. A continuación, se mostrarán unas breves demostraciones de cómo puede funcionar la app. Para un mayor detalle, visitar el enlace en la descripción del repositorio.
+
+## Agenda básica de evento
+
+![](/public/basicdemo.gif)
+
+## Eliminar evento
+
+![](/public/deletedemo.gif)
+
+## Calificar evento
+
+![](/public/ratingdemo.gif)
