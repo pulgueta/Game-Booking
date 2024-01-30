@@ -1,8 +1,6 @@
-import { buttonVariants } from "@/components/ui/button";
 import {
 	Table,
 	TableBody,
-	TableCell,
 	TableHead,
 	TableHeader,
 	TableRow,
@@ -10,6 +8,7 @@ import {
 
 import { getBookings } from "@/lib/data/get-data";
 import { rscFetch } from "@/lib/utils";
+import { Bookings } from "./table-body";
 
 export const revalidate = 0;
 export const dynamic = "force-dynamic";
@@ -44,38 +43,7 @@ const Booking = async () => {
 					</TableRow>
 				</TableHeader>
 				<TableBody>
-					{bookings.map((booking) => (
-						<TableRow key={booking.id}>
-							<TableCell className='text-center'>
-								{booking.place}
-							</TableCell>
-							<TableCell className='text-center'>
-								{booking.description}
-							</TableCell>
-							<TableCell className='text-center'>
-								{new Date(
-									booking.bookingDate
-								).toLocaleDateString("es-CO", {
-									day: "numeric",
-									month: "long",
-									year: "numeric",
-								})}
-							</TableCell>
-							<TableCell className='text-center'>
-								<a
-									href={`mailto:${booking.organizer}`}
-									className={buttonVariants({
-										variant: "link",
-									})}
-								>
-									{booking.organizer}
-								</a>
-							</TableCell>
-							<TableCell className='text-center'>
-								{booking.spots}
-							</TableCell>
-						</TableRow>
-					))}
+					<Bookings prevBookings={bookings} />
 				</TableBody>
 			</Table>
 		</div>
