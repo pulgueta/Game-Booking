@@ -1,11 +1,14 @@
 import { revalidatePath } from "next/cache";
 
-import { Booking } from "@/models/booking.entity";
-import { AppDataSource } from "@/models/db";
-import { Place } from "@/models/place.entity";
 import { Comment } from "@/models/comment.entity";
 import { ratingSchema } from "@/schemas";
 import { pusherServer } from "@/pusher";
+import {
+	bookingRepository,
+	commentRepository,
+	placeRepository,
+} from "@/models/db/repositories";
+import { getBookings, getPlaces } from "@/lib/data/get-data";
 
 export const POST = async (req: Request) => {
 	const body = await req.json();
@@ -22,10 +25,6 @@ export const POST = async (req: Request) => {
 
 	const { opinion, rating } = values.data;
 
-	const bookingRepository = (await AppDataSource).getRepository(Booking);
-	const placeRepository = (await AppDataSource).getRepository(Place);
-	const commentRepository = (await AppDataSource).getRepository(Comment);
-
 	const comment = new Comment();
 	comment.comment = opinion;
 	comment.rating = rating;
@@ -41,11 +40,11 @@ export const POST = async (req: Request) => {
 	});
 
 	pusherServer.trigger("booking", "bookingChange", {
-		booking: await bookingRepository.find(),
+		booking: await getBookings(),
 	});
 
 	await pusherServer.trigger("place", "placeAvailability", {
-		places: await placeRepository.find(),
+		places: await getPlaces(),
 	});
 
 	if (affected.affected === 1) {

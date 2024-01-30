@@ -1,10 +1,9 @@
-import { AppDataSource } from "@/models/db";
-import { Place } from "@/models/place.entity";
+import { getPlaces } from "@/lib/data/get-data";
 
 export const GET = async () => {
-	const places = (await (await AppDataSource).manager.find(Place))
-		.map((place) => place)
-		.sort((a, b) => b.availability - a.availability);
+	const places = (await getPlaces()).sort(
+		(a, b) => b.availability - a.availability
+	);
 
 	return Response.json(places, { status: 200 });
 };

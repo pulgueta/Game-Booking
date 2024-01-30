@@ -2,18 +2,16 @@ import { revalidatePath } from "next/cache";
 
 import { currentUser } from "@/lib/auth/current-user";
 import { Booking } from "@/models/booking.entity";
-import { AppDataSource } from "@/models/db";
 import { Place } from "@/models/place.entity";
 import { eventSchema } from "@/schemas";
 import { pusherServer } from "@/pusher";
+import { bookingRepository, placeRepository } from "@/models/db/repositories";
+import { getBookings, getBookingsById, getPlaces } from "@/lib/data/get-data";
 
 export const DELETE = async (req: Request) => {
 	const body = (await req.json()) as Booking;
 
 	const { bookingDate, place, spots } = body;
-
-	const bookingRepository = (await AppDataSource).getRepository(Booking);
-	const placeRepository = (await AppDataSource).getRepository(Place);
 
 	await placeRepository.increment({ name: place }, "availability", spots);
 
@@ -24,11 +22,11 @@ export const DELETE = async (req: Request) => {
 	});
 
 	await pusherServer.trigger("booking", "bookingChange", {
-		booking: await bookingRepository.find(),
+		booking: await getBookings(),
 	});
 
 	await pusherServer.trigger("place", "placeAvailability", {
-		places: await placeRepository.find(),
+		places: await getPlaces(),
 	});
 
 	if (affected.affected === 1) {
@@ -56,9 +54,6 @@ export const POST = async (req: Request) => {
 	}
 
 	const { eventDate, participants, place, description } = data.data;
-
-	const bookingRepository = (await AppDataSource).getRepository(Booking);
-	const placeRepository = (await AppDataSource).getRepository(Place);
 
 	const eventPlace = await Place.findOne({
 		where: {
@@ -113,11 +108,9 @@ export const POST = async (req: Request) => {
 export const GET = async () => {
 	const user = await currentUser();
 
-	const bookings = (
-		await (
-			await AppDataSource
-		).manager.findBy(Booking, { organizer: user?.email as string })
-	).map((booking) => booking);
+	const bookings = (await getBookingsById(user?.email as string)).map(
+		(booking) => booking
+	);
 
 	return Response.json(bookings, { status: 200 });
 };
