@@ -12,11 +12,13 @@ export const {
 	unstable_update: update,
 } = NextAuth({
 	pages: {
-		signIn: "/auth/login",
-		error: "/auth/error",
+		signIn: "/login",
+		newUser: "/register",
 	},
-	adapter: TypeORMAdapter(env.DATABASE_URL),
+	adapter: TypeORMAdapter(env.DB_HOST),
 	session: { strategy: "jwt" },
 	secret: env.AUTH_SECRET,
+	debug: process.env.NODE_ENV === "development",
+	useSecureCookies: process.env.NODE_ENV === "production",
 	...authConfig,
 });
