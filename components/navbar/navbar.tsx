@@ -1,3 +1,4 @@
+import { Route } from "next";
 import Link from "next/link";
 
 import { currentUser } from "@/lib/auth/current-user";
@@ -11,7 +12,7 @@ export const Navbar = async () => {
 	return (
 		<nav className='p-6 flex flex-col md:flex-row gap-4 items-center justify-between lg:justify-around border-b'>
 			<Link
-				href='/'
+				href={"/" as Route}
 				className='scroll-m-20 text-2xl md:text-4xl font-extrabold tracking-tight'
 			>
 				Reserventos
