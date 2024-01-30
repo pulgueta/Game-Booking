@@ -4,17 +4,18 @@ import {
 	Column,
 	CreateDateColumn,
 	UpdateDateColumn,
-	ManyToOne,
 } from "typeorm";
-import { User } from "./user.entity";
 
 @Entity()
 export class Booking {
-	@PrimaryGeneratedColumn("increment")
+	@PrimaryGeneratedColumn("uuid")
 	id: string;
 
 	@Column({ type: "varchar", nullable: false })
 	place: string;
+
+	@Column({ type: "varchar", nullable: false })
+	description: string;
 
 	@Column({ type: "date", nullable: false })
 	bookingDate: Date;
@@ -25,8 +26,8 @@ export class Booking {
 	@Column({ type: "int", nullable: false })
 	spots: number;
 
-	@ManyToOne(() => User, ({ id }) => id)
-	user: User["id"];
+	@Column({ type: "varchar", nullable: false })
+	organizer: string;
 
 	@CreateDateColumn()
 	createdAt: Date;
