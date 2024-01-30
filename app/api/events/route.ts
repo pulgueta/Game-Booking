@@ -6,6 +6,31 @@ import { AppDataSource } from "@/models/db";
 import { Place } from "@/models/place.entity";
 import { eventSchema } from "@/schemas";
 
+export const DELETE = async (req: Request) => {
+	const body = (await req.json()) as Booking;
+
+	const { bookingDate, place, spots } = body;
+
+	const bookingRepository = (await AppDataSource).getRepository(Booking);
+	const placeRepository = (await AppDataSource).getRepository(Place);
+
+	await placeRepository.increment({ name: place }, "availability", spots);
+
+	const affected = await bookingRepository.delete({
+		bookingDate,
+		place,
+		spots,
+	});
+
+	if (affected.affected === 1) {
+		revalidatePath("/");
+		return Response.json("Evento eliminado correctamente", { status: 200 });
+		// biome-ignore lint/style/noUselessElse: <explanation>
+	} else {
+		return Response.json("Error al eliminar el evento", { status: 500 });
+	}
+};
+
 export const POST = async (req: Request) => {
 	const user = await currentUser();
 
@@ -21,12 +46,12 @@ export const POST = async (req: Request) => {
 		return Response.json(data.error.flatten().fieldErrors, { status: 400 });
 	}
 
-	const { eventDate, participants, place } = data.data;
+	const { eventDate, participants, place, description } = data.data;
 
 	const bookingRepository = (await AppDataSource).getRepository(Booking);
 	const placeRepository = (await AppDataSource).getRepository(Place);
 
-	const eventPlace = await placeRepository.findOne({
+	const eventPlace = await Place.findOne({
 		where: {
 			name: place,
 		},
@@ -34,6 +59,18 @@ export const POST = async (req: Request) => {
 
 	if (eventPlace === null) {
 		return Response.json("No se encontró el lugar", { status: 404 });
+	}
+
+	const existingEvent = await bookingRepository.findOne({
+		where: {
+			bookingDate: eventDate,
+		},
+	});
+
+	if (existingEvent) {
+		return Response.json("Ya hay un evento en la misma fecha", {
+			status: 400,
+		});
 	}
 
 	if (eventPlace.availability < participants) {
@@ -47,7 +84,8 @@ export const POST = async (req: Request) => {
 	booking.place = place;
 	booking.bookingDate = eventDate;
 	booking.spots = participants;
-	booking.user = user.id as string;
+	booking.description = description;
+	booking.organizer = body.email;
 	const savedEvent = await bookingRepository.save(booking);
 
 	revalidatePath("/");
@@ -58,11 +96,11 @@ export const POST = async (req: Request) => {
 export const GET = async () => {
 	const user = await currentUser();
 
-	const bookingRepository = await (await AppDataSource)
-		.getRepository(Booking)
-		.findBy({
-			user: user?.id,
-		});
+	const bookings = (
+		await (
+			await AppDataSource
+		).manager.findBy(Booking, { organizer: user?.email as string })
+	).map((booking) => booking);
 
-	return Response.json(bookingRepository, { status: 200 });
+	return Response.json(bookings, { status: 200 });
 };
