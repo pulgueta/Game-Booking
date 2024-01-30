@@ -5,6 +5,7 @@ import { Booking } from "@/models/booking.entity";
 import { AppDataSource } from "@/models/db";
 import { Place } from "@/models/place.entity";
 import { eventSchema } from "@/schemas";
+import { pusherServer } from "@/pusher";
 
 export const DELETE = async (req: Request) => {
 	const body = (await req.json()) as Booking;
@@ -20,6 +21,14 @@ export const DELETE = async (req: Request) => {
 		bookingDate,
 		place,
 		spots,
+	});
+
+	await pusherServer.trigger("booking", "bookingChange", {
+		booking: await bookingRepository.find(),
+	});
+
+	await pusherServer.trigger("place", "placeAvailability", {
+		places: await placeRepository.find(),
 	});
 
 	if (affected.affected === 1) {
@@ -87,6 +96,14 @@ export const POST = async (req: Request) => {
 	booking.description = description;
 	booking.organizer = body.email;
 	const savedEvent = await bookingRepository.save(booking);
+
+	await pusherServer.trigger("booking", "bookingChange", {
+		booking: await bookingRepository.find(),
+	});
+
+	await pusherServer.trigger("place", "placeAvailability", {
+		places: await placeRepository.find(),
+	});
 
 	revalidatePath("/");
 
