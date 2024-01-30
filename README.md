@@ -46,7 +46,7 @@ pnpm dev
 > [!WARNING]
 > Si no se proporcionan las variables de entorno correctas, la aplicación fallará al correr.
 
-¡Listo! Ya puedes usar la aplicación en local. A continuación, se mostrarán unas breves demostraciones de cómo puede funcionar la app. Para un mayor detalle, visitar el enlace en la descripción del repositorio.
+¡Listo! Ya puedes usar la aplicación en local. A continuación, se mostrarán unas breves demostraciones de cómo puede funcionar la app. Para un mayor detalle, utilizar la aplicación en local
 
 ## Agenda básica de evento
 
