@@ -37,12 +37,16 @@ export const eventSchema = object({
 		4,
 		"El lugar del evento debe tener al menos 4 caracteres"
 	),
-	eventDate: coerce
-		.date({
-			required_error: "Debes ingresar una fecha",
-			invalid_type_error: "Ingresa una fecha válida",
-		})
-		.min(new Date(), "No puedes ingresar una fecha anterior a hoy"),
+	eventDate: coerce.date({
+		required_error: "Debes ingresar una fecha",
+		invalid_type_error: "Ingresa una fecha válida",
+	}),
+
+	// .min(new Date(), "No puedes ingresar una fecha anterior a hoy"),
+	description: string().min(
+		4,
+		"El descripción del evento debe tener al menos 4 caracteres"
+	),
 	participants: coerce
 		.number({ required_error: "Debes ingresar los participantes" })
 		.min(5, "El evento debe tener al menos 5 participantes")
