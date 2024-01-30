@@ -5,13 +5,15 @@ import { env } from "@/envs.mjs";
 
 export const pusherServer = new Sever({
 	appId: env.PUSHER_APPID,
-	key: env.PUSHER_KEY,
+	key: process.env.NEXT_PUBLIC_PUSHER_KEY as string,
 	secret: env.PUSHER_SECRET,
-	cluster: env.PUSHER_CLUSTER,
-	useTLS: env.PUSHER_TLS,
+	cluster: "us2",
+	useTLS: Boolean(env.PUSHER_TLS),
 });
 
-export const pusherClient = new Client("", {
-	cluster: env.PUSHER_CLUSTER,
-	authEndpoint: "",
-});
+export const pusherClient = new Client(
+	process.env.NEXT_PUBLIC_PUSHER_KEY as string,
+	{
+		cluster: "us2",
+	}
+);
