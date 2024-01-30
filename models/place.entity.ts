@@ -1,11 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm";
 
 @Entity()
-export class Place {
+export class Place extends BaseEntity {
 	@PrimaryGeneratedColumn("uuid")
 	id: string;
 
-	@Column({ type: "varchar", nullable: false })
+	@Column({ type: "varchar", nullable: false, unique: true })
 	name: string;
 
 	@Column({ type: "int", nullable: false })
