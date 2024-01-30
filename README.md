@@ -59,3 +59,6 @@ pnpm dev
 ## Calificar evento
 
 ![](/public/ratingdemo.gif)
+
+> [!NOTE]
+> En las demostraciones se pueden hacer reservaciones en días anteriores a hoy por fines demostrativos de cómo se califica una reserva la cual ya su día pasó
