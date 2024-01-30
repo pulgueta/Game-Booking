@@ -33,16 +33,14 @@ export const placeSchema = object({
 export type Place = TypeOf<typeof placeSchema>;
 
 export const eventSchema = object({
-	place: string().min(
-		4,
-		"El lugar del evento debe tener al menos 4 caracteres"
-	),
-	eventDate: coerce.date({
-		required_error: "Debes ingresar una fecha",
-		invalid_type_error: "Ingresa una fecha válida",
-	}),
+	place: string().min(4, "Debes escoger un lugar"),
+	eventDate: coerce
+		.date({
+			required_error: "Debes ingresar una fecha",
+			invalid_type_error: "Ingresa una fecha válida",
+		})
 
-	// .min(new Date(), "No puedes ingresar una fecha anterior a hoy"),
+		.min(new Date(), "No puedes ingresar una fecha anterior a hoy"),
 	description: string().min(
 		4,
 		"El descripción del evento debe tener al menos 4 caracteres"
@@ -55,3 +53,10 @@ export const eventSchema = object({
 });
 
 export type Event = TypeOf<typeof eventSchema>;
+
+export const ratingSchema = object({
+	rating: string().min(4, "Debes escoger una calificación"),
+	opinion: string().min(4, "La opinión debe tener al menos 4 caracteres"),
+});
+
+export type Rating = TypeOf<typeof ratingSchema>;
