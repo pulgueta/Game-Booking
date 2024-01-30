@@ -7,18 +7,14 @@ export const getPlaces = async () => {
 
 	const places = await placeRepository.find();
 
-	return places.map(({ availability, id, name }) => ({
-		availability,
-		id,
-		name,
-	}));
+	return places.map((places) => places);
 };
 
-export const getBookingsById = async (userId: string) => {
+export const getBookingsById = async (email: string) => {
 	const bookingRepository = (await AppDataSource).getRepository(Booking);
 
 	const bookings = await bookingRepository.findBy({
-		user: userId,
+		organizer: email,
 	});
 
 	return bookings.map((booking) => booking);
