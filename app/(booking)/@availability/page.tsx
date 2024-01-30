@@ -1,13 +1,13 @@
 import {
 	Table,
 	TableBody,
-	TableCell,
 	TableHead,
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
 import { getPlaces } from "@/lib/data/get-data";
 import { rscFetch } from "@/lib/utils";
+import { PlacesAvailability } from "./table-body";
 
 export const revalidate = 0;
 export const dynamic = "force-dynamic";
@@ -29,16 +29,7 @@ const Availability = async () => {
 					</TableRow>
 				</TableHeader>
 				<TableBody>
-					{places.map((place) => (
-						<TableRow key={place.id}>
-							<TableCell className='font-medium'>
-								{place.name}
-							</TableCell>
-							<TableCell className='text-right'>
-								{place.availability}
-							</TableCell>
-						</TableRow>
-					))}
+					<PlacesAvailability places={places} />
 				</TableBody>
 			</Table>
 		</div>
