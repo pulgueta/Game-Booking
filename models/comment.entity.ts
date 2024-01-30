@@ -7,7 +7,6 @@ import {
 	ManyToOne,
 } from "typeorm";
 
-// import { User } from "./user.entity";
 import { Booking } from "./booking.entity";
 
 @Entity()
@@ -18,17 +17,14 @@ export class Comment extends BaseEntity {
 	@Column({ type: "varchar", nullable: false })
 	comment: string;
 
-	@Column({ type: "smallint", nullable: false })
-	rating: number;
-
-	@Column({ type: "uuid" })
-	userId: string;
+	@Column({ type: "varchar", nullable: false })
+	rating: string;
 
 	@ManyToOne(() => Booking, ({ place }) => place)
 	place: Booking["place"];
 
-	// @ManyToOne(() => User, ({ comments }) => comments)
-	// user: User;
+	@Column({ type: "varchar", nullable: false })
+	organizer: string;
 
 	@CreateDateColumn()
 	createdAt: Date;

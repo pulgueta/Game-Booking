@@ -20,9 +20,6 @@ export class Booking {
 	@Column({ type: "date", nullable: false })
 	bookingDate: Date;
 
-	@Column({ type: "smallint", nullable: true })
-	rating?: number;
-
 	@Column({ type: "int", nullable: false })
 	spots: number;
 
