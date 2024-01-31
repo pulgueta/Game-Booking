@@ -1,12 +1,12 @@
 import type { ReactNode } from "react";
 
 import { NextPage } from "next";
-import { currentUser } from "@/lib/auth/current-user";
 import { redirect } from "next/navigation";
+
+import { currentUser } from "@/lib/auth/current-user";
 
 type MainPage = {
 	children: ReactNode;
-	booking: ReactNode;
 	userbooks: ReactNode;
 	bookings: ReactNode;
 	availability: ReactNode;
@@ -14,7 +14,6 @@ type MainPage = {
 
 const RootLayout: NextPage<MainPage> = async ({
 	children,
-	booking,
 	userbooks,
 	bookings,
 	availability,
@@ -30,7 +29,6 @@ const RootLayout: NextPage<MainPage> = async ({
 			{children}
 			{userbooks}
 			{availability}
-			{booking}
 			{bookings}
 		</section>
 	);
