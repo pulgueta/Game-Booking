@@ -19,7 +19,13 @@ Aquí se podrán agendar eventos en ciertos centros comerciales de Colombia, pro
 git clone https://github.com/pulgueta/Game-Booking <carpeta>
 ```
 
-3. Entrar al directorio e instalar las dependencias con npm, yarn o pnpm:
+4. Instalar pnpm de forma global
+
+```sh
+npm install -g pnpm
+```
+
+4. Entrar al directorio e instalar las dependencias con npm, yarn o pnpm:
 
 ```sh
 cd <carpeta>
@@ -31,9 +37,9 @@ pnpm install
 pnpm i
 ```
 
-4. Luego de registrarse en los servicios mencionados al inicio, pegar las variables de entorno en el archivo [.env.local](./.env.local) como se muestra en el [.env.example](./.env.example)
+5. Luego de registrarse en los servicios mencionados al inicio, pegar las variables de entorno en el archivo [.env.local](./.env.local) como se muestra en el [.env.example](./.env.example)
 
-5. Correr de forma local la aplicación:
+6. Correr de forma local la aplicación:
 
 ```sh
 pnpm run dev
