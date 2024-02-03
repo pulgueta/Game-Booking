@@ -39,7 +39,7 @@ export const POST = async (req: Request) => {
 		spots,
 	});
 
-	pusherServer.trigger("booking", "bookingChange", {
+	await pusherServer.trigger("booking", "bookingChange", {
 		booking: await getBookings(),
 	});
 
